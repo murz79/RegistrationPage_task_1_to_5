@@ -9,7 +9,8 @@
         android:layout_width="377dp"
         android:layout_height="683dp"
         android:layout_margin="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <EditText
             android:id="@+id/loginField"
@@ -22,7 +23,9 @@
             android:text=""
             android:textSize="20sp"
             android:maxLines="1"
-            android:maxLength="18"/>
+            android:maxLength="18"
+            android:autofillHints=""
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/passwordField"
@@ -35,13 +38,16 @@
             android:text=""
             android:textSize="20sp"
             android:maxLines="1"
-            android:maxLength="18"/>
+            android:maxLength="18"
+            android:autofillHints=""
+            tools:ignore="HardcodedText" />
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:textSize="30sp"
-            android:text="Sign" />
+            android:text="Sign"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
 </FrameLayout>

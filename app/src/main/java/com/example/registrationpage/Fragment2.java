@@ -47,7 +47,7 @@ public class Fragment2 extends Fragment {
                 intent.putExtra("login", login);
 
                 startActivity(intent);
-                getActivity().finish();
+                requireActivity().finish();
             } else {
                 Toast.makeText(getActivity(), "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
             }

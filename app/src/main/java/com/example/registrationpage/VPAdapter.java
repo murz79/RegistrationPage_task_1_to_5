@@ -1,39 +1,34 @@
 package com.example.registrationpage;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class VPAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-    private final ArrayList<String> fragmentTitle = new ArrayList<>();
-    public VPAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+public class VPAdapter extends FragmentStateAdapter {
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    final List<String> fragmentTitleList = new ArrayList<>();
+
+    public VPAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        fragmentList.add(fragment);
+        fragmentTitleList.add(title);
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-        return fragmentArrayList.get(position);
+    public Fragment createFragment(int position) {
+        return fragmentList.get(position);
     }
 
     @Override
-    public int getCount() {
-        return fragmentArrayList.size();
-    }
-
-    public void addFragment(Fragment fragment, String title) {
-        fragmentArrayList.add(fragment);
-        fragmentTitle.add(title);
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentTitle.get(position);
+    public int getItemCount() {
+        return fragmentList.size();
     }
 }

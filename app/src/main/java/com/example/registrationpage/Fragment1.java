@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 public class Fragment1 extends Fragment {
     EditText loginEditText, passwordEditText, confirmPasswordEditText;
@@ -57,7 +56,7 @@ public class Fragment1 extends Fragment {
                 Intent intent = new Intent(getActivity(), WelcomeActivity.class);
                 intent.putExtra("login", login);
                 startActivity(intent);
-                getActivity().finish();
+                requireActivity().finish();
             }
             cursor.close();
             db.close();
