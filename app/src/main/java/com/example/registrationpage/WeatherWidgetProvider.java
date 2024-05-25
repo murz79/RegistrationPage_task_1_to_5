@@ -14,7 +14,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.AppWidgetTarget;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -64,27 +63,36 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
                         updateWidgetUI(context, views, appWidgetManager, appWidgetId, weatherData);
                     } catch (JSONException e) {
                         Toast.makeText(context, "ошибка", Toast.LENGTH_SHORT).show();
+                    } finally {
+                        views.setViewVisibility(R.id.widget_progress_bar, View.GONE);
                     }
-                },
+                    },
                 error -> {
                     views.setViewVisibility(R.id.widget_progress_bar, View.GONE);
                     Toast.makeText(context, "ошибка", Toast.LENGTH_SHORT).show();
                 });
         requestQueue.add(jsonObjectRequest);
-        views.setViewVisibility(R.id.widget_progress_bar, View.GONE);
     }
 
-    private static WeatherData parseWeatherData(JSONObject response) throws JSONException {
+    public static WeatherData parseWeatherData(JSONObject response) throws JSONException {
         JSONObject main = response.getJSONObject("main");
         double temperature = main.getDouble("temp");
         double feelsLike = main.getDouble("feels_like");
         String location = response.getString("name");
-
         JSONArray weatherArray = response.getJSONArray("weather");
         JSONObject weatherObject = weatherArray.getJSONObject(0);
         String iconCode = weatherObject.getString("icon");
+        int humidity = main.getInt("humidity");
+        double windSpeed = response.getJSONObject("wind").getDouble("speed");
+        String description = response.getJSONArray("weather").getJSONObject(0).getString("description");
 
-        return new WeatherData(String.valueOf(temperature), String.valueOf(feelsLike), location, iconCode);
+        return new WeatherData(String.valueOf(temperature),
+                String.valueOf(feelsLike),
+                location,
+                iconCode,
+                String.valueOf(humidity),
+                String.valueOf(windSpeed),
+                description);
     }
 
     private static void updateWidgetUI(Context context, RemoteViews views,
@@ -102,7 +110,6 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
                 .asBitmap()
                 .load(iconUrl)
                 .into(appWidgetTarget);
-        views.setViewVisibility(R.id.widget_progress_bar, View.GONE);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 }
